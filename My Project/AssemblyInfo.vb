@@ -8,12 +8,15 @@ Imports System.Runtime.InteropServices
 
 ' Review the values of the assembly attributes
 
-<Assembly: AssemblyTitle("Databasic.SQLite")> 
-<Assembly: AssemblyDescription("")> 
-<Assembly: AssemblyCompany("")> 
+<Assembly: AssemblyTitle("Databasic.SQLite")>
+<Assembly: AssemblyDescription("Databasic - C#/VB.NET database utility
+ - focusing on queries primarily based on pure SQL commands, no linq transations
+ - arranging data into primitive types, typed active record classes, collections and more
+ - allowing to run any nonselect queries")>
+<Assembly: AssemblyCompany("Tom Flidr")>
 <Assembly: AssemblyProduct("Databasic.SQLite")> 
-<Assembly: AssemblyCopyright("Copyright ©  2017")> 
-<Assembly: AssemblyTrademark("")> 
+<Assembly: AssemblyCopyright("Copyright ©  2017")>
+<Assembly: AssemblyTrademark("Tom Flidr")>
 
 <Assembly: ComVisible(False)>
 

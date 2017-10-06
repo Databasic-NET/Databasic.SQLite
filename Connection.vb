@@ -17,17 +17,17 @@ Public Class Connection
 
 	Public Overrides ReadOnly Property Statement As System.Type = GetType(Statement)
 
-	Public Overrides Sub Open(dsn As String)
-		Me._provider = New SQLiteConnection(dsn)
-		Me._provider.Open()
-		'AddHandler Me._provider.InfoMessage, AddressOf Connection.errorHandler
-	End Sub
+    Public Overrides Sub Open(dsn As String)
+        Me._provider = New SQLiteConnection(dsn)
+        Me._provider.Open()
+    End Sub
 
-	Public Overrides Function CreateAndBeginTransaction(Optional transactionName As String = "", Optional isolationLevel As IsolationLevel = IsolationLevel.Unspecified) As Databasic.Transaction
-		Return New Transaction() With {
-			.ConnectionWrapper = Me,
-			.Instance = Me._provider.BeginTransaction(DirectCast(isolationLevel, System.Data.IsolationLevel))
-		}
-	End Function
+    Protected Overrides Function createAndBeginTransaction(Optional transactionName As String = "", Optional isolationLevel As IsolationLevel = IsolationLevel.Unspecified) As Databasic.Transaction
+        Me.OpenedTransaction = New Transaction() With {
+            .ConnectionWrapper = Me,
+            .Instance = Me._provider.BeginTransaction(DirectCast(isolationLevel, System.Data.IsolationLevel))
+        }
+        Return Me.OpenedTransaction
+    End Function
 
 End Class
