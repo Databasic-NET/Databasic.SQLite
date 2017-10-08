@@ -10,9 +10,9 @@ Public Class Transaction
             Return Me._instance
         End Get
         Set(value As DbTransaction)
-			Me._instance = value
-		End Set
-	End Property
+            Me._instance = value
+        End Set
+    End Property
     Private _instance As SQLiteTransaction
 
 End Class
