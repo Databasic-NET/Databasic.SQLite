@@ -4,7 +4,7 @@
 		<add
 		  name="Databasic.Example.SQLite"
 		  connectionString="Data Source=.\sqlite.db;Version=3;Password=PASSWORD;"
-		  providerName="SQLite.Data.SQLite"
+		  providerName="System.Data.SQLite"
 		  xdt:Transform="Remove"
 		  xdt:Locator="Match(name)" />
 	</connectionStrings>

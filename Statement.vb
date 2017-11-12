@@ -1,4 +1,4 @@
-﻿Imports System.ComponentModel
+Imports System.ComponentModel
 Imports System.Data.Common
 Imports System.Data.SQLite
 Imports SQLite.Data.SQLiteClient
@@ -71,14 +71,18 @@ Public Class Statement
     ''' </summary>
     ''' <param name="sqlParams">Anonymous object with named keys as MySQL/MariaDB statement params without any '@' chars in object keys.</param>
     Protected Overrides Sub addParamsWithValue(sqlParams As Object)
+        Dim sqlParamValue As Object
         If (Not sqlParams Is Nothing) Then
-            Dim sqlParamValue As Object
             For Each prop As PropertyDescriptor In TypeDescriptor.GetProperties(sqlParams)
                 sqlParamValue = prop.GetValue(sqlParams)
+                If (sqlParamValue Is Nothing) Then
+                    sqlParamValue = DBNull.Value
+                Else
+                    sqlParamValue = Me.getPossibleUnderlyingEnumValue(sqlParamValue)
+                End If
                 Me._cmd.Parameters.AddWithValue(
-                        prop.Name,
-                        If((sqlParamValue Is Nothing), DBNull.Value, sqlParamValue)
-                    )
+                    prop.Name, sqlParamValue
+                )
             Next
         End If
     End Sub
@@ -87,18 +91,18 @@ Public Class Statement
     ''' </summary>
     ''' <param name="sqlParams">Dictionary with named keys as MySQL/MariaDB statement params without any '@' chars in dictionary keys.</param>
     Protected Overrides Sub addParamsWithValue(sqlParams As Dictionary(Of String, Object))
+        Dim sqlParamValue As Object
         If (Not sqlParams Is Nothing) Then
             For Each pair As KeyValuePair(Of String, Object) In sqlParams
+                If (pair.Value Is Nothing) Then
+                    sqlParamValue = DBNull.Value
+                Else
+                    sqlParamValue = Me.getPossibleUnderlyingEnumValue(pair.Value)
+                End If
                 Me._cmd.Parameters.AddWithValue(
-                        pair.Key,
-                        If((pair.Value Is Nothing), DBNull.Value, pair.Value)
-                    )
+                    pair.Key, sqlParamValue
+                )
             Next
         End If
     End Sub
-
-
-
-
-
 End Class
